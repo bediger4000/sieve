@@ -63,6 +63,19 @@ the groutines,
 was tricky.
 Naturally, I had data races.
 
+On second thought,
+I'm not sure this meets the problem statement.
+The statement implies that an array of integers exists,
+the all the multiples of 2 get struck,
+then all the multiples of 3,
+then all the multiples of 5,
+etc etc.
+This program generates a stream of integers,
+and independent worker routines throw out multiples
+of a single number.
+The program adds to the sieve as it finds previously-unknow
+primes.
+
 ## Interview analysis
 
 How in the heck is this "easy"?
