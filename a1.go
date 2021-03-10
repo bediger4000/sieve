@@ -4,43 +4,37 @@ import "fmt"
 
 func main() {
 	in := make(chan int)
-	startcounter(in)
 	found := 0
+	go startcounter(in)
 OUT:
 	for {
-		var m int
-		select {
-		case m = <-in:
-			fmt.Printf("%d\n", m)
-			in = start(m, in)
-			found++
-			if found >= 10000 {
-				break OUT
-			}
+		m := <-in
+		fmt.Printf("%d\n", m)
+		found++
+		if found >= 10000 {
+			break OUT
 		}
+		in = startfilter(m, in)
 	}
 }
 
 func startcounter(o chan int) {
-	go func(o chan int) {
-		for n := 2; true; n++ {
-			o <- n
-		}
-	}(o)
+	for n := 2; true; n++ {
+		o <- n
+	}
 }
 
-func start(m int, in chan int) (out chan int) {
-	out = make(chan int)
-
-	go func(in, out chan int, m int) {
+func startfilter(m int, in chan int) chan int {
+	out := make(chan int)
+	// anonymous function, read ints from channel in,
+	// write ints to channel out if they aren't divisible
+	// by prime, which should have the value of a prime number.
+	go func(in, out chan int, prime int) {
 		for n := range in {
-			x := n % m
-			if x == 0 {
-				continue
+			if (n % prime) != 0 {
+				out <- n
 			}
-			out <- n
 		}
 	}(in, out, m)
-
-	return
+	return out
 }
