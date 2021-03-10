@@ -21,6 +21,8 @@ Bonus: Create a generator that produces primes indefinitely
 
 ## Build and Run
 
+[Code](a1.go)
+
 ```sh
 $ go build a1.go
 $ ./a1 | more
@@ -61,7 +63,13 @@ passing channels into goroutines,
 and reading from channels returned when starting
 the groutines,
 was tricky.
-Naturally, I had data races.
+Naturally, I had data races
+in setting the variable containing the channel
+to read primes from.
+I think I should have passed in a new channel
+from which to read primes,
+rather than having the start-a-filter func
+create it.
 
 On second thought,
 I'm not sure this meets the problem statement.
@@ -75,6 +83,14 @@ and independent worker routines throw out multiples
 of a single number.
 The program adds to the sieve as it finds previously-unknow
 primes.
+
+I found [another version](a2.go) of this I did a few years ago
+while watching a
+[Rob Pike youtube video](https://www.youtube.com/watch?v=hB05UFqOtFA&feature=youtu.be).
+Pike talked about a research language he wrote called
+[Newsqueak](https://en.wikipedia.org/wiki/Newsqueak).
+I transposed his Newsqueak code into Go to get this,
+then forgot about it until now.
 
 ## Interview analysis
 
