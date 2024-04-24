@@ -92,6 +92,9 @@ Pike talked about a research language he wrote called
 I transposed his Newsqueak code into Go to get this,
 then forgot about it until now.
 
+Apparently, [Doug McIlroy](https://www.cs.dartmouth.edu/~doug/sieve/sieve.pdf)
+proposed doing a sieve in this fashion in the late 1960s.
+
 ## Interview analysis
 
 How in the heck is this "easy"?
